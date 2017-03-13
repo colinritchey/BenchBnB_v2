@@ -3,6 +3,7 @@ export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 import * as APIUtil from '../util/session_api_util';
 
 export const login = (user) => (dispatch) => {
+
   APIUtil.signin(user)
     .then(_user => dispatch(receiveCurrentUser(_user)))
     .fail(errors => dispatch(receiveErrors(errors.responseJSON)));
@@ -15,6 +16,7 @@ export const logout = () => (dispatch) => {
 };
 
 export const signup = (user) => (dispatch) => {
+
   APIUtil.signup(user)
     .then(_user => dispatch(receiveCurrentUser(_user)))
     .fail(errors => dispatch(receiveErrors(errors.responseJSON)));
