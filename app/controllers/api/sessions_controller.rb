@@ -5,11 +5,11 @@ class Api::SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_credintials(params[:user][:username], params[:user][:password])
-    if user
-      sign_in(user)
-      # render 'api/users/show'
-      render json: {}
+    @user = User.find_by_credintials(params[:user][:username], params[:user][:password])
+    if @user
+      sign_in(@user)
+      render 'api/users/show'
+      # render json: {}
     else
       render json: {errors: ["Invalid login"], status: 401}
     end
@@ -20,7 +20,7 @@ class Api::SessionsController < ApplicationController
 
     if @user
       logout
-      render json: {}
+      render 'api/users/show'
     else
       render json: {errors: ["No current user"], status: 404}
     end
