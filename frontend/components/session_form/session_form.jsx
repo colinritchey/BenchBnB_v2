@@ -12,6 +12,16 @@ class SessionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidUpdate(){
+    this.redirectIfLoggedIn();
+  }
+
+  redirectIfLoggedIn(){
+    if(this.props.loggedIn){
+      this.props.router.push('/');
+    }
+  }
+
   update(field){
     return e => this.setState({[field]: e.target.value});
   }
@@ -19,9 +29,8 @@ class SessionForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = Object.assign({}, this.state);
-    debugger;
     this.props.processForm(user);
-    hashHistory.push('/');
+
   }
 
   render(){
@@ -31,6 +40,9 @@ class SessionForm extends React.Component {
     return(
       <div>
         <h3>{text}</h3>
+          <ul>
+            {this.props.errors.map((err, idx) => <li key={idx}>{err}</li>)}
+          </ul>
           <form onSubmit={this.handleSubmit}>
             <label>Username:
               <input
